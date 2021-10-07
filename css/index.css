@@ -1,0 +1,9 @@
+#hourly-forecasts {
+  overflow-x: scroll;
+  flex-wrap: nowrap;
+  scrollbar-width: none;
+}
+
+#wrapper-bg {
+  background: url("../img/");
+}
