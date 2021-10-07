@@ -12,3 +12,21 @@
   background-size: cover;
   background-position: center;
 }
+
+#wrapper-name,
+#wrapper-description,
+#wrapper-temp,
+.wrapper-humidity,
+.wrapper-wind-speed,
+.hour,
+.hourly-temp {
+  filter: drop-shadow(3px 0px 1px #333);
+}
+
+.current-weather-img {
+  filter: drop-shadow(3px 0px 0px #fff);
+}
+
+.daily-weather-img {
+  filter: drop-shadow(3px 0px 0px #333);
+}

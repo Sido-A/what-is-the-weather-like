@@ -25,7 +25,7 @@
   <body>
     <!-- Start your project here-->
     <div class="container my-5">
-      <div class="row d-flex justify-content-center flex-column">
+      <div class="row justify-content-center flex-column">
         <div class="col-md-6 my-3">
           <div data-bg-img="wrapper-bg" class="card shadow-1-strong py-3">
             <!-- Current weather -->
@@ -33,9 +33,13 @@
               <p id="wrapper-name" class="mb-1 h2"></p>
               <p id="wrapper-description" class="mb-1"></p>
               <p id="wrapper-temp" class="display-1 mb-1"></p>
-              <span>Humidity: <span id="wrapper-humidity"></span></span>
+              <span class="wrapper-humidity"
+                >Humidity: <span id="wrapper-humidity"></span
+              ></span>
               <span class="mx-2">|</span>
-              <span>Wind speed: <span id="wrapper-wind-speed"></span></span>
+              <span class="wrapper-wind-speed"
+                >Wind speed: <span id="wrapper-wind-speed"></span
+              ></span>
             </div>
 
             <!-- Hourly forecast -->
@@ -98,25 +102,25 @@
           bg_img.style.backgroundImage = `url('${bg_img_base_url}')`;
 
           // hourly temp
-          for (let i = 0; i < data.hourly.length - 38; i++) {
+          for (let i = 0; i < data.hourly.length - 30; i++) {
             let img_src = `http://openweathermap.org/img/wn/${data.hourly[i].weather[0].icon}.png`;
             let hourly_temp = Math.round(data.hourly[i].temp);
             if (i === 0) {
               document.querySelector("#hourly-forecasts").innerHTML += `
-              <div class="col-2 text-center">
-                <strong>Now</strong>
-                <img src="${img_src}" alt="..." />
-                <strong>${hourly_temp}&deg;</strong>
+              <div class="col-2 text-center d-flex flex-column text-center">
+                <strong class="hour">Now</strong>
+                <img class="align-self-center current-weather-img" src="${img_src}" alt="..." width=50 />
+                <strong class="hourly-temp">${hourly_temp}&deg;</strong>
                 </div>
                 `;
             } else {
               let next_hour_in_date_obj = new Date(data.hourly[i].dt * 1000);
               let get_hour = next_hour_in_date_obj.getHours();
               document.querySelector("#hourly-forecasts").innerHTML += `
-              <div class="col-2 text-center">
-                <strong>${get_hour}</strong>
-                <img src="${img_src}" alt="..." />
-                <strong>${hourly_temp}&deg;</strong>
+              <div class="col-2 text-center d-flex flex-column text-center">
+                <strong class="hour">${get_hour}</strong>
+                <img class="align-self-center current-weather-img" src="${img_src}" alt="..." width=50 />
+                <strong class="hourly-temp">${hourly_temp}&deg;</strong>
                 </div>
                 `;
             }
@@ -133,17 +137,17 @@
 
             if (j === 0) {
               document.querySelector("#daily-forecasts").innerHTML += `
-            <div class="col-3 d-flex flex-column text-center">
-              <strong>Today</strong>
-              <img class="align-self-center" src="${img_src}" alt="..." width=50 />
+            <div class="col-2 d-flex flex-column text-center">
+              <strong class="day">Today</strong>
+              <img class="align-self-center daily-weather-img" src="${img_src}" alt="..." width=50 />
               <strong>${daily_temp}&deg;</strong>
             </div>`;
             }
 
             document.querySelector("#daily-forecasts").innerHTML += `
-            <div class="col-3 d-flex flex-column text-center">
-              <strong>${get_day}</strong>
-              <img class="align-self-center" src="${img_src}" alt="..." width=50 />
+            <div class="col-2 d-flex flex-column text-center">
+              <strong class="day">${get_day.substring(0, 3)}</strong>
+              <img class="align-self-center daily-weather-img" src="${img_src}" alt="..." width=50 />
               <strong>${daily_temp}&deg;</strong>
             </div>`;
           }
