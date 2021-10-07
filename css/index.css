@@ -1,9 +1,14 @@
-#hourly-forecasts {
+#hourly-forecasts,
+#daily-forecasts {
   overflow-x: scroll;
   flex-wrap: nowrap;
   scrollbar-width: none;
+  border-radius: 25px;
 }
 
-#wrapper-bg {
-  background: url("../img/");
+[data-bg-img="wrapper-bg"] {
+  color: #fff;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }

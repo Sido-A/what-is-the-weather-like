@@ -25,9 +25,9 @@
   <body>
     <!-- Start your project here-->
     <div class="container my-5">
-      <div class="row d-flex justify-content-center">
-        <div class="col-md-6">
-          <div id="wrapper-bg" class="card shadow-1-strong">
+      <div class="row d-flex justify-content-center flex-column">
+        <div class="col-md-6 my-3">
+          <div data-bg-img="wrapper-bg" class="card shadow-1-strong py-3">
             <!-- Current weather -->
             <div class="card-header text-center border-0">
               <p id="wrapper-name" class="mb-1 h2"></p>
@@ -42,18 +42,14 @@
             <div class="card-body">
               <div id="hourly-forecasts" class="row"></div>
             </div>
+          </div>
+        </div>
 
+        <div class="col-md-6 my-3">
+          <div class="card shadow-1-strong">
             <!-- Daily forecast -->
             <div class="card-body">
-              <div class="row">
-                <div class="col-md-6"><strong>Today</strong></div>
-                <div class="col-md-2">
-                  <img src="#" alt="..." id="wrapper-icon-today" />
-                </div>
-                <div class="col-md-4">
-                  <span id="wrapper-forecast-temp-today"></span>
-                </div>
-              </div>
+              <div id="daily-forecasts" class="row"></div>
             </div>
           </div>
         </div>
@@ -87,12 +83,7 @@
           const current_wind_speed = data.current.wind_speed;
           const current_weather_icon = data.current.weather[0].icon;
           const current_timezone = data.timezone;
-
-          console.log("temp", current_temp);
-          console.log("humidity", current_humidity);
-          console.log("clouds", current_clouds);
-          console.log("wind_speed", current_wind_speed);
-          console.log("weather[0].icon", current_weather_icon);
+          const bg_img = document.querySelector('[data-bg-img="wrapper-bg"]');
 
           document.querySelector("#wrapper-name").innerHTML = current_timezone;
           document.querySelector("#wrapper-description").innerHTML =
@@ -103,17 +94,19 @@
           document.querySelector("#wrapper-wind-speed").innerHTML =
             current_wind_speed;
 
-          console.log(data.hourly.length);
+          const bg_img_base_url = `https://mdbgo.io/ascensus/mdb-advanced/img/${current_weather.toLowerCase()}.gif`;
+          bg_img.style.backgroundImage = `url('${bg_img_base_url}')`;
+
           // hourly temp
           for (let i = 0; i < data.hourly.length - 38; i++) {
+            let img_src = `http://openweathermap.org/img/wn/${data.hourly[i].weather[0].icon}.png`;
+            let hourly_temp = Math.round(data.hourly[i].temp);
             if (i === 0) {
               document.querySelector("#hourly-forecasts").innerHTML += `
               <div class="col-2 text-center">
                 <strong>Now</strong>
-                <img src="http://openweathermap.org/img/wn/${
-                  data.hourly[i].weather[0].icon
-                }.png" alt="..." />
-                <strong>${Math.round(data.hourly[i].temp)}</strong>
+                <img src="${img_src}" alt="..." />
+                <strong>${hourly_temp}&deg;</strong>
                 </div>
                 `;
             } else {
@@ -122,24 +115,38 @@
               document.querySelector("#hourly-forecasts").innerHTML += `
               <div class="col-2 text-center">
                 <strong>${get_hour}</strong>
-                <img src="http://openweathermap.org/img/wn/${
-                  data.hourly[i].weather[0].icon
-                }.png" alt="..." />
-                <strong>${Math.round(data.hourly[i].temp)}</strong>
+                <img src="${img_src}" alt="..." />
+                <strong>${hourly_temp}&deg;</strong>
                 </div>
                 `;
             }
           }
 
           // daily temp
-          const daily_temp = {};
-          for (let j = 0; j < 2; j++) {
-            daily_temp[`daily_temp_${j}`] = Math.round(data.daily[j].temp.day);
-            daily_temp[`daily_main_weather_${j}`] =
-              data.daily[j].weather[0].main;
-          }
+          for (let j = 0; j < data.daily.length; j++) {
+            let daily_temp = Math.round(data.daily[j].temp.day);
+            let img_src = `http://openweathermap.org/img/wn/${data.daily[j].weather[0].icon}.png`;
+            let next_day_in_date_obj = new Date(data.daily[j].dt * 1000);
+            let get_day = next_day_in_date_obj.toLocaleString("en-us", {
+              weekday: "long",
+            });
 
-          console.log("daily_temp", daily_temp);
+            if (j === 0) {
+              document.querySelector("#daily-forecasts").innerHTML += `
+            <div class="col-3 d-flex flex-column text-center">
+              <strong>Today</strong>
+              <img class="align-self-center" src="${img_src}" alt="..." width=50 />
+              <strong>${daily_temp}&deg;</strong>
+            </div>`;
+            }
+
+            document.querySelector("#daily-forecasts").innerHTML += `
+            <div class="col-3 d-flex flex-column text-center">
+              <strong>${get_day}</strong>
+              <img class="align-self-center" src="${img_src}" alt="..." width=50 />
+              <strong>${daily_temp}&deg;</strong>
+            </div>`;
+          }
         })
         .catch((err) => console.log("ERR", err));
     </script>
