@@ -51,7 +51,9 @@ const fetchWeatherData = (weather_api_url) => {
         current_wind_speed;
 
       const bg_img_base_url = `https://mdbgo.io/ascensus/mdb-advanced/img/${current_weather.toLowerCase()}.gif`;
-      bg_img.style.backgroundImage = `url('${bg_img_base_url}')`;
+      document.querySelector(
+        "body"
+      ).style.backgroundImage = `url('${bg_img_base_url}')`;
 
       // hourly temp
       for (let i = 0; i < data.hourly.length - 30; i++) {
