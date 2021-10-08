@@ -6,7 +6,7 @@ search_other_country_weather.addEventListener("submit", (e) => {
   e.preventDefault();
   const input_elm = document.querySelector(`#${e.target.id}>input`);
   let BASE_URL = new window.URL(
-    "http://api.openweathermap.org/data/2.5/weather?appid=416e9783200627c77363e74e6091c3b8"
+    "https://api.openweathermap.org/data/2.5/weather?appid=416e9783200627c77363e74e6091c3b8"
   );
 
   BASE_URL.searchParams.set("q", input_elm.value);
@@ -67,7 +67,7 @@ const fetchSearchedWeatherData = (weather_api_url) => {
 
       // hourly temp
       for (let i = 0; i < data.hourly.length - 30; i++) {
-        let img_src = `http://openweathermap.org/img/wn/${data.hourly[i].weather[0].icon}.png`;
+        let img_src = `https://openweathermap.org/img/wn/${data.hourly[i].weather[0].icon}.png`;
         let hourly_temp = Math.round(data.hourly[i].temp);
         if (i === 0) {
           document.querySelector("#hourly-forecasts").innerHTML += `
@@ -94,7 +94,7 @@ const fetchSearchedWeatherData = (weather_api_url) => {
       document.querySelector("#daily-forecasts").innerHTML = "";
       for (let j = 0; j < data.daily.length; j++) {
         let daily_temp = Math.round(data.daily[j].temp.day);
-        let img_src = `http://openweathermap.org/img/wn/${data.daily[j].weather[0].icon}.png`;
+        let img_src = `https://openweathermap.org/img/wn/${data.daily[j].weather[0].icon}.png`;
         let next_day_in_date_obj = new Date(data.daily[j].dt * 1000);
         let get_day = next_day_in_date_obj.toLocaleString("en-us", {
           weekday: "long",
