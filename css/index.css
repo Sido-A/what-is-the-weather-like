@@ -1,7 +1,3 @@
-.card {
-  background-color: transparent;
-  box-shadow: none !important;
-}
 #hourly-forecasts,
 #daily-forecasts {
   overflow-x: scroll;
@@ -10,8 +6,7 @@
   border-radius: 25px;
 }
 
-[data-bg-img="wrapper-bg"],
-body {
+[data-bg-img="wrapper-bg"] {
   color: #fff;
   background-repeat: no-repeat;
   background-size: cover;
