@@ -17,6 +17,16 @@ search_other_country_weather.addEventListener("submit", (e) => {
   fetch(BASE_URL.href)
     .then((res) => res.json())
     .then((res) => {
+      if (res.cod !== 200) {
+        document.querySelector(".container.py-5").insertAdjacentHTML(
+          "afterbegin",
+          `<div class="alert alert-dismissible fade show alert-warning mb-n4" role="alert" data-mdb-color="warning">
+          <i class="fas fa-exclamation-triangle me-3"></i> ${res.message.toUpperCase()}.
+        <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+      </div>`
+        );
+        return;
+      }
       const latitude = res.coord.lat;
       const longitude = res.coord.lon;
       const api_units_options = `metric`;
@@ -100,7 +110,7 @@ const fetchSearchedWeatherData = (weather_api_url) => {
           weekday: "long",
         });
 
-        if (j === 0) {
+        if (j !== 0) {
           document.querySelector("#daily-forecasts").innerHTML += `
         <div class="col-3 d-flex flex-column text-center">
           <strong class="day">Today</strong>

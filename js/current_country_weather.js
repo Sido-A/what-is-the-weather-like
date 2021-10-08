@@ -51,9 +51,7 @@ const fetchWeatherData = (weather_api_url) => {
         current_wind_speed;
 
       const bg_img_base_url = `https://mdbgo.io/ascensus/mdb-advanced/img/${current_weather.toLowerCase()}.gif`;
-      document.querySelector(
-        "body"
-      ).style.backgroundImage = `url('${bg_img_base_url}')`;
+      bg_img.style.backgroundImage = `url('${bg_img_base_url}')`;
 
       // hourly temp
       for (let i = 0; i < data.hourly.length - 30; i++) {
@@ -89,21 +87,14 @@ const fetchWeatherData = (weather_api_url) => {
           weekday: "long",
         });
 
-        if (j === 0) {
+        if (j !== 0) {
           document.querySelector("#daily-forecasts").innerHTML += `
-      <div class="col-3 d-flex flex-column text-center">
-        <strong class="day">Today</strong>
-        <img class="align-self-center daily-weather-img" src="${img_src}" alt="..." width=50 />
-        <strong>${daily_temp}&deg;</strong>
-      </div>`;
-        }
-
-        document.querySelector("#daily-forecasts").innerHTML += `
       <div class="col-3 d-flex flex-column text-center ">
         <strong class="day">${get_day.substring(0, 3)}</strong>
         <img class="align-self-center daily-weather-img" src="${img_src}" alt="..." width=50 />
         <strong>${daily_temp}&deg;</strong>
       </div>`;
+        }
       }
     })
     .catch((err) => console.log("ERR", err));
