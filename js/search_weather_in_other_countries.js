@@ -113,18 +113,11 @@ const fetchSearchedWeatherData = (weather_api_url) => {
         if (j !== 0) {
           document.querySelector("#daily-forecasts").innerHTML += `
         <div class="col-3 d-flex flex-column text-center">
-          <strong class="day">Today</strong>
-          <img class="align-self-center daily-weather-img" src="${img_src}" alt="..." width=50 />
-          <strong>${daily_temp}&deg;</strong>
-        </div>`;
-        }
-
-        document.querySelector("#daily-forecasts").innerHTML += `
-        <div class="col-3 d-flex flex-column text-center ">
           <strong class="day">${get_day.substring(0, 3)}</strong>
           <img class="align-self-center daily-weather-img" src="${img_src}" alt="..." width=50 />
           <strong>${daily_temp}&deg;</strong>
         </div>`;
+        }
       }
     })
     .catch((err) => console.log("ERR", err));
